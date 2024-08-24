@@ -3,8 +3,36 @@ const historyList = document.getElementById('history-list');
 const roomInput = document.getElementById('room');
 const dateInput = document.getElementById('date');
 const notesInput = document.getElementById('notes');
-
+const loginError = document.getElementById('login-error');
+let currentUser = null;
 let currentSessionHistory = [];
+
+// Ejemplo de usuarios almacenados en localStorage
+const users = {
+    "usuario1": { password: "1234", records: [] },
+    "usuario2": { password: "5678", records: [] }
+};
+
+// Guardar usuarios en localStorage si no existen
+if (!localStorage.getItem('users')) {
+    localStorage.setItem('users', JSON.stringify(users));
+}
+
+// Función para manejar el inicio de sesión
+function login() {
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+    const storedUsers = JSON.parse(localStorage.getItem('users'));
+
+    if (storedUsers[username] && storedUsers[username].password === password) {
+        currentUser = username;
+        document.getElementById('login').style.display = 'none';
+        document.getElementsByClassName('calculator').style.display = 'block';
+        loadHistory();
+    } else {
+        loginError.innerText = "Usuario o contraseña incorrectos";
+    }
+}
 
 // Función para agregar un número al display
 function appendNumber(number) {
@@ -76,10 +104,10 @@ function saveCalculation() {
         notes: notes
     };
 
-    // Guardar en localStorage
-    let records = JSON.parse(localStorage.getItem('hotelRecords')) || [];
-    records.push(record);
-    localStorage.setItem('hotelRecords', JSON.stringify(records));
+    // Guardar en el historial del usuario actual
+    let storedUsers = JSON.parse(localStorage.getItem('users'));
+    storedUsers[currentUser].records.push(record);
+    localStorage.setItem('users', JSON.stringify(storedUsers));
 
     // Añadir al historial visible
     addToHistory(record);
@@ -114,8 +142,11 @@ function clearFields() {
 
 // Función para cargar el historial desde localStorage al iniciar la aplicación
 function loadHistory() {
-    const records = JSON.parse(localStorage.getItem('hotelRecords')) || [];
-    records.forEach(addToHistory);
+    const storedUsers = JSON.parse(localStorage.getItem('users'));
+    const userRecords = storedUsers[currentUser].records;
+
+    historyList.innerHTML = ''; // Limpiar el historial visible
+    userRecords.forEach(addToHistory);
 }
 
 // Evento para manejar las teclas del teclado
@@ -136,6 +167,3 @@ document.addEventListener('keydown', function(event) {
         clearDisplay(); // Si la tecla es Escape, limpia el display
     }
 });
-
-// Cargar el historial al iniciar la aplicación
-loadHistory();

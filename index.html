@@ -5,8 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadora</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* Inicialmente, ocultamos el contenedor de la calculadora */
+        .calculator{
+            display: none;
+        }
+    </style>
 </head>
 <body>
+    <!-- Formulario de inicio de sesión -->
+    <div id="login" class="login">
+        <h2>Iniciar Sesión</h2>
+        <label for="username">Usuario:</label>
+        <input type="text" id="username" placeholder="Ingrese su nombre de usuario">
+        <label for="password">Contraseña:</label>
+        <input type="password" id="password" placeholder="Ingrese su contraseña">
+        <button onclick="login()">Iniciar Sesión</button>
+        <div id="login-error" style="color: red;"></div>
+    </div>
     <div class="calculator">
         <div id="display" class="display">0</div>
         <div class="buttons">
@@ -45,7 +61,7 @@
       <label for="notes">Observaciones:</label>
       <textarea id="notes" placeholder="Añadir observaciones..."></textarea>
 
-      <button onclick="saveCalculation()">Guardar Cálculo</button>
+      <button onclick="saveCalculation()">Guardar</button>
   </div>
     <!-- Contenedor del historial -->
     <div id="history" class="history">
