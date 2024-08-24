@@ -27,7 +27,7 @@ function login() {
     if (storedUsers[username] && storedUsers[username].password === password) {
         currentUser = username;
         document.getElementById('login').style.display = 'none';
-        document.getElementsByClassName('calculator').style.display = 'block';
+        document.getElementsByClassName('calculator')[0].style.display = 'block';
         loadHistory();
     } else {
         loginError.innerText = "Usuario o contraseña incorrectos";
