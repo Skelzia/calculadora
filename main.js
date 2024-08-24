@@ -9,8 +9,8 @@ let currentSessionHistory = [];
 
 // Ejemplo de usuarios almacenados en localStorage
 const users = {
-    "usuario1": { password: "1234", records: [] },
-    "usuario2": { password: "5678", records: [] }
+    "test": { password: "", records: [] },
+    "usuario1": { password: "1234", records: [] }
 };
 
 // Guardar usuarios en localStorage si no existen
