@@ -28,6 +28,9 @@ function login() {
         currentUser = username;
         document.getElementById('login').style.display = 'none';
         document.getElementsByClassName('calculator')[0].style.display = 'block';
+        document.getElementsByClassName('details')[0].style.display = 'block';
+        document.getElementsByClassName('history')[0].style.display = 'block';
+
         loadHistory();
     } else {
         loginError.innerText = "Usuario o contraseña incorrectos";
