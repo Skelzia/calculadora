@@ -1,7 +1,4 @@
-Calculadora con historial para mi uso en recepción del hotel H10 Estepona Palace
+Calculadora con historial por Usuario.
 
-FUNCIONES A AÑADIR:
---- Creación de usuario
---- Base de Datos
-
-
+AVISO
+El Historial se guarda en los datos del Navegador
