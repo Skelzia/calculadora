@@ -8,13 +8,14 @@ let currentUser = null;
 let currentSessionHistory = [];
 
 // Ejemplo de usuarios almacenados en localStorage
-const users = {
-    "test": { password: "", records: [] },
-    "usuario1": { password: "1234", records: [] }
-};
+function getUsers() {
+    const storedUsers = localStorage.getItem('users');
+    return storedUsers ? JSON.parse(storedUsers) : {};
+}
 
-// Guardar usuarios en localStorage si no existen
-if (!localStorage.getItem('users')) {
+const users = getUsers();
+
+function saveUsers() {
     localStorage.setItem('users', JSON.stringify(users));
 }
 
@@ -27,6 +28,7 @@ function login() {
     if (storedUsers[username] && storedUsers[username].password === password) {
         currentUser = username;
         document.getElementById('login').style.display = 'none';
+        document.getElementById('register').style.display = 'none';
         document.getElementsByClassName('calculator')[0].style.display = 'block';
         document.getElementsByClassName('details')[0].style.display = 'block';
         document.getElementsByClassName('history')[0].style.display = 'block';
@@ -36,6 +38,28 @@ function login() {
         loginError.innerText = "Usuario o contraseña incorrectos";
     }
 }
+
+function register() {
+    const newUsername = document.getElementById("new-username").value;
+    const newPassword = document.getElementById("new-password").value;
+    const errorDiv = document.getElementById("register-error");
+
+    if (!newUsername || !newPassword) {
+        errorDiv.textContent = "Por favor complete todos los campos.";
+        return;
+    }
+
+    if (users[newUsername]) {
+        errorDiv.textContent = "El nombre de usuario ya está en uso.";
+        return;
+    }
+
+    // Añadir nuevo usuario
+    users[newUsername] = { password: newPassword, records: [] };
+    saveUsers();
+    errorDiv.textContent = "Cuenta creada exitosamente.";
+}
+
 
 // Función para agregar un número al display
 function appendNumber(number) {
